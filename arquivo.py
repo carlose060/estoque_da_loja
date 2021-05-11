@@ -50,14 +50,25 @@ class Arquivo:
                 it.setQt(int(it.getQt())+ qt)
                 break
 
+    def AlteraPreco(self,nome,preco,op,itens):
+        for it in itens:
+            if it.getNome() == nome:
+                if op == 1: #Preço de venda
+                    it.setPreco(preco)
+                else:  ## op = 0 preço de custo
+                    it.setPreco_custo(preco)
+                texto = str(it.getNome())+';'+str(it.getQt())+';'+str(it.getPreco())+';'+str(it.getPreco_custo())+';'
+                with open('prod/'+nome+'.txt', 'w') as file:
+                    file.write(texto)
+                break
 
 
-'''programa = Arquivo().CarregaProd()
+programa = Arquivo().CarregaProd()
 for it in programa:
     print(it)
-Arquivo().AumentarQt('cha',10,programa)
+Arquivo().AlteraPreco('bolo',5.1,0,programa)
 for it in programa:
-    print(it)'''
+    print(it)
 
 
 
