@@ -23,32 +23,38 @@ class Arquivo:
         for elemento in itens:
             if elemento.getNome() == nome:
                 if (int(elemento.getQt()) - qt) > 0:
-                    with open('prod/'+elemento.getNome()+'.txt', 'r') as file:
+                    elemento.setQt(int(elemento.getQt()) - qt)  #Jeito alternativo e mais pratico para fazer a remoção
+                    texto = str(elemento.getNome())+';'+str(elemento.getQt())+';'+str(elemento.getPreco())+';'+str(elemento.getPreco_custo())+';'
+                    '''with open('prod/'+elemento.getNome()+'.txt', 'r') as file:
                         st = file.read()
                     st = st.split(';')
                     st[1] =  int(st[1]) - qt
-                    texto = str(st[0])+';'+str(st[1])+';'+str(st[2])+';'+str(st[3])+';'
-                    with open('prod/'+st[0]+'.txt', 'w') as file:
+                    texto = str(st[0])+';'+str(st[1])+';'+str(st[2])+';'+str(st[3])+';' '''
+                    with open('prod/'+elemento.getNome()+'.txt', 'w') as file:
                         file.write(texto)
-                    elemento.setQt(int(elemento.getQt()) - qt)
-                    break
+                    return True
                 else:
                     os.remove('prod/'+elemento.getNome()+'.txt')
-                    del(elemento)
-                    break
+                    itens.remove(elemento) #del(elemento) so funcionava como indice, o antigo modo do for
+                    return True
+        return False      ##Não removeu, pois nao achou o elemento ou erro durante o codigo
 
     def AumentarQt(self,nome,qt,itens):
-        with open('prod/'+nome+'.txt', 'r') as file:
-            st = file.read()
-        st = st.split(';')
-        st[1] =  int(st[1]) + qt
-        texto = str(st[0])+';'+str(st[1])+';'+str(st[2])+';'+str(st[3])+';'
-        with open('prod/'+nome+'.txt', 'w') as file:
-            file.write(texto)
         for it in itens:
             if it.getNome() == nome:
                 it.setQt(int(it.getQt())+ qt)
-                break
+                texto = str(it.getNome())+';'+str(it.getQt())+';'+str(it.getPreco())+';'+str(it.getPreco_custo())+';'
+                with open('prod/'+nome+'.txt', 'w') as file:
+                    file.write(texto)
+                return True
+        return False
+        '''with open('prod/'+nome+'.txt', 'r') as file:
+            st = file.read()
+        st = st.split(';')
+        st[1] =  int(st[1]) + qt
+        texto = str(st[0])+';'+str(st[1])+';'+str(st[2])+';'+str(st[3])+';' '''
+
+
 
     def AlteraPreco(self,nome,preco,op,itens):
         for it in itens:
@@ -60,9 +66,17 @@ class Arquivo:
                 texto = str(it.getNome())+';'+str(it.getQt())+';'+str(it.getPreco())+';'+str(it.getPreco_custo())+';'
                 with open('prod/'+nome+'.txt', 'w') as file:
                     file.write(texto)
-                break
+                return True
+        return False
 
-
+'''x = Arquivo()
+programa = Arquivo().CarregaProd()
+for it in programa:
+    print(it)
+y = Produto('bolo',15,6.5,2.85)
+x.NovoProd(y,programa)
+for it in programa:
+        print(it)'''
 '''programa = Arquivo().CarregaProd()
 for it in programa:
     print(it)
