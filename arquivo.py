@@ -63,12 +63,12 @@ class Arquivo:
                 break
 
 
-programa = Arquivo().CarregaProd()
+'''programa = Arquivo().CarregaProd()
 for it in programa:
     print(it)
 Arquivo().AlteraPreco('bolo',5.1,0,programa)
 for it in programa:
-    print(it)
+    print(it)'''
 
 
 
