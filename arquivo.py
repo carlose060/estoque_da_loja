@@ -22,14 +22,9 @@ class Arquivo:
     def RemoverQt(self,nome,qt,itens):
         for elemento in itens:
             if elemento.getNome() == nome:
-                if (int(elemento.getQt()) - qt) > 0:
-                    elemento.setQt(int(elemento.getQt()) - qt)  #Jeito alternativo e mais pratico para fazer a remoção
+                if (int(elemento.getQt()) - int(qt)) > 0:
+                    elemento.setQt(int(elemento.getQt()) - int(qt))  #Jeito alternativo e mais pratico para fazer a remoção
                     texto = str(elemento.getNome())+';'+str(elemento.getQt())+';'+str(elemento.getPreco())+';'+str(elemento.getPreco_custo())+';'
-                    '''with open('prod/'+elemento.getNome()+'.txt', 'r') as file:
-                        st = file.read()
-                    st = st.split(';')
-                    st[1] =  int(st[1]) - qt
-                    texto = str(st[0])+';'+str(st[1])+';'+str(st[2])+';'+str(st[3])+';' '''
                     with open('prod/'+elemento.getNome()+'.txt', 'w') as file:
                         file.write(texto)
                     return True
@@ -42,24 +37,19 @@ class Arquivo:
     def AumentarQt(self,nome,qt,itens):
         for it in itens:
             if it.getNome() == nome:
-                it.setQt(int(it.getQt())+ qt)
+                it.setQt(int(it.getQt())+ int(qt))
                 texto = str(it.getNome())+';'+str(it.getQt())+';'+str(it.getPreco())+';'+str(it.getPreco_custo())+';'
                 with open('prod/'+nome+'.txt', 'w') as file:
                     file.write(texto)
                 return True
         return False
-        '''with open('prod/'+nome+'.txt', 'r') as file:
-            st = file.read()
-        st = st.split(';')
-        st[1] =  int(st[1]) + qt
-        texto = str(st[0])+';'+str(st[1])+';'+str(st[2])+';'+str(st[3])+';' '''
 
 
 
     def AlteraPreco(self,nome,preco,op,itens):
         for it in itens:
             if it.getNome() == nome:
-                if op == 1: #Preço de venda
+                if int(op) == 1: #Preço de venda
                     it.setPreco(preco)
                 else:  ## op = 0 preço de custo
                     it.setPreco_custo(preco)
@@ -68,24 +58,3 @@ class Arquivo:
                     file.write(texto)
                 return True
         return False
-
-'''x = Arquivo()
-programa = Arquivo().CarregaProd()
-for it in programa:
-    print(it)
-y = Produto('bolo',15,6.5,2.85)
-x.NovoProd(y,programa)
-for it in programa:
-        print(it)'''
-'''programa = Arquivo().CarregaProd()
-for it in programa:
-    print(it)
-Arquivo().AlteraPreco('bolo',5.1,0,programa)
-for it in programa:
-    print(it)'''
-
-
-
-'''neew = Produto('bola',20,20.5,10.0)
-Arquivo().NovoProd(neew)
-programa.append(neew)'''
