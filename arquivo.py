@@ -22,18 +22,11 @@ class Arquivo:
 
     def cria_produto(self,produto,itens):
         """"Cria novos produto."""
-        produto_string = (str(produto.get_nome())+';'+str(produto.get_qt())+
-                 ';'+str(produto.get_preco())+';'
-                 + str(produto.get_preco_custo())+'\n')
+        produto_string = produto.__str__()
         caminho_arquivo = 'estoque.csv'
-        with open(caminho_arquivo, 'r') as file:
-            todos_produtos= file.read()
-            #Todos os produtos salvos ate o momento
-            todos_produtos= todos_produtos+produto_string
-            #Concateno com o novo produto
-        with open(caminho_arquivo, 'w') as file:
-            file.write(todos_produtos)
         itens.append(produto)
+        with open(caminho_arquivo, 'a') as file:
+            file.write(produto_string)
 
     def remove_produto(self,produto,itens):
         '''Exclui o arquivo e o produto na lista.'''
@@ -45,8 +38,6 @@ class Arquivo:
             todos_produtos= file.read()
             todos_produtos= todos_produtos.split(produto_string)
             #Removendo o produto do .csv, vira uma lista com dois item
-            print(todos_produtos)
-            print(len(todos_produtos))
             produto_string= todos_produtos[0]+todos_produtos[1]
             #Junta os dois itens em uma string para inserir no .csv
         with open(caminho_arquivo, 'w') as file:
