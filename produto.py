@@ -11,7 +11,7 @@ class Produto:
         qt = self.get_qt()
         preco = self.get_preco()
         preco_custo = self.get_preco_custo()
-        return 'Produto = '+nome+'\nQuantidade = '+ str(qt) +'\nValor = '+str(preco) +'\nPreco de Custo = '+str(preco_custo)+'\n__________________'
+        return str(nome)+';'+str(qt)+';'+str(preco)+';'+str(preco_custo)+'\n'
 
   def get_nome(self):
     return self.__nome
