@@ -37,3 +37,22 @@ class Estoque:
       with open(caminho_arquivo, 'w') as file:
           file.write(todos_produtos)
       return True
+
+
+  def retira_quantidade(self,nome,qt,itens_na_memoria):
+      """Retira uma quantidade x de um produto"""
+      for item in itens_na_memoria:
+          if item.get_nome() == nome:
+              nova_quantidade = int(item.get_qt()) - int(qt)
+              if nova_quantidade > 0:
+                  item.set_qt(nova_quantidade)
+                  todos_produtos = ''
+                  for elemento in itens_na_memoria:
+                      todos_produtos = todos_produtos+elemento.__str__()
+                  caminho_arquivo = 'estoque.csv'
+                  with open(caminho_arquivo, 'w') as file:
+                      file.write(todos_produtos)
+                  return True
+              else:
+                  return self.remove_produto(elemento,itens_na_memoria)
+      return False
