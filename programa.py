@@ -15,7 +15,7 @@ class Programa:
         '''Mostra todos os produtos na coluna 0.'''
         Label(self.frame1,fg="blue",text='Produtos em estoque').grid(row=0)
         for i in range(len(self.list_itens)):
-            Label(self.frame1,fg="black",text=self.list_itens[i]).grid(row=1+i)
+            Label(self.frame1,fg="black",text=repr(self.list_itens[i])).grid(row=1+i)
 
 
     def inserir(self):
@@ -131,11 +131,10 @@ class Programa:
 
 
     def __init__(self,root):
-        #self.fr = Frame(root,borderwidth=1,relief='solid')
         self.fr = PanedWindow(root,borderwidth=1,relief='solid')
-        self.fr.place(x=5, y=5,width=190,height=390)
+        self.fr.place(x=5, y=5,width=190,height=590)
         self.frame1 = PanedWindow(root,borderwidth=1,relief='solid')
-        self.frame1.place(x=205, y=5,width=190,height=390)
+        self.frame1.place(x=205, y=5,width=190,height=590)
         self.arquivo = Arquivo()
         self.list_itens = self.arquivo.carrega_produtos()
         self.widget_menu_principal()
@@ -144,6 +143,6 @@ class Programa:
 
 root = Tk()
 root.title('Controle do Estoque')
-root.geometry('400x400')
+root.geometry('400x600')
 Programa(root)
 root.mainloop()
