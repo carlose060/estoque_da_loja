@@ -13,6 +13,13 @@ class Produto:
         preco_custo = self.get_preco_custo()
         return str(nome)+';'+str(qt)+';'+str(preco)+';'+str(preco_custo)+'\n'
 
+  def __repr__(self):
+      nome = self.get_nome()
+      qt = self.get_qt()
+      preco = self.get_preco()
+      preco_custo = self.get_preco_custo()
+      return 'Produto: '+str(nome)+'\nQuantidade: '+str(qt)+'\nPreço: '+str(preco)+'\nPreço custo: '+str(preco_custo)+'\n__________________________'
+
   def get_nome(self):
     return self.__nome
 
