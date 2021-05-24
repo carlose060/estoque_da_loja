@@ -56,3 +56,17 @@ class Estoque:
               else:
                   return self.remove_produto(elemento,itens_na_memoria)
       return False
+
+  def aumenta_quantidade(self,nome,qt,itens_na_memoria):
+      for item in itens_na_memoria:
+          if item.get_nome() == nome:
+              nova_quantidade = int(item.get_qt()) + int(qt)
+              item.set_qt(nova_quantidade)
+              todos_produtos = ''
+              for elemento in itens_na_memoria:
+                  todos_produtos = todos_produtos+elemento.__str__()
+              caminho_arquivo = 'estoque.csv'
+              with open(caminho_arquivo, 'w') as file:
+                  file.write(todos_produtos)
+              return True
+      return False
