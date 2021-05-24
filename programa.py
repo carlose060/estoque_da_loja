@@ -13,9 +13,9 @@ class Programa:
 
     def printar_produtos(self):
         '''Mostra todos os produtos na coluna 0.'''
-        Label(self.fr,fg="blue",text='Produtos em estoque').grid(row=0)
+        Label(self.frame1,fg="blue",text='Produtos em estoque').grid(row=0)
         for i in range(len(self.list_itens)):
-            Label(self.fr,fg="black",text=self.list_itens[i]).grid(row=1+i)
+            Label(self.frame1,fg="black",text=self.list_itens[i]).grid(row=1+i)
 
 
     def inserir(self):
@@ -124,20 +124,26 @@ class Programa:
         '''Meunu principal onde eh iniciado o programa.'''
         self.limpa_tela()
         self.printar_produtos()
-        Button(self.fr, text="Inserir em estoque",command = self.widget_menu_inserir).grid(column=1,row=0)
-        Button(self.fr, text="Remover em estoque",command= self.widget_remover).grid(column=1,row=1)
-        Button(self.fr, text="Alterar preço",command=self.widget_alterar).grid(column=1,row=2)
-        Button(self.fr, text="SAIR", fg="red", command = root.destroy).grid(column=1,row=3)
+        Button(self.fr, text="Adicionar em estoque",command = self.widget_menu_inserir).grid(row=0)
+        Button(self.fr, text="Remover em estoque",command= self.widget_remover).grid(row=1)
+        Button(self.fr, text="Alterar preço",command=self.widget_alterar).grid(row=2)
+        Button(self.fr, text="SAIR", fg="red", command = root.destroy).grid(row=3,padx=65)
 
 
     def __init__(self,root):
-        self.fr = Frame(root)
-        self.fr.pack()
+        #self.fr = Frame(root,borderwidth=1,relief='solid')
+        self.fr = PanedWindow(root,borderwidth=1,relief='solid')
+        self.fr.place(x=5, y=5,width=190,height=390)
+        self.frame1 = PanedWindow(root,borderwidth=1,relief='solid')
+        self.frame1.place(x=205, y=5,width=190,height=390)
         self.arquivo = Arquivo()
         self.list_itens = self.arquivo.carrega_produtos()
         self.widget_menu_principal()
 
 
+
 root = Tk()
+root.title('Controle do Estoque')
+root.geometry('400x400')
 Programa(root)
 root.mainloop()

@@ -30,19 +30,13 @@ class Arquivo:
 
     def remove_produto(self,produto,itens):
         '''Exclui o arquivo e o produto na lista.'''
-        produto_string = (str(produto.get_nome())+';'+str(produto.get_qt())+
-                 ';'+str(produto.get_preco())+';'
-                 + str(produto.get_preco_custo())+'\n')
-        caminho_arquivo = 'estoque.csv'
-        with open(caminho_arquivo, 'r') as file:
-            todos_produtos= file.read()
-            todos_produtos= todos_produtos.split(produto_string)
-            #Removendo o produto do .csv, vira uma lista com dois item
-            produto_string= todos_produtos[0]+todos_produtos[1]
-            #Junta os dois itens em uma string para inserir no .csv
-        with open(caminho_arquivo, 'w') as file:
-            file.write(produto_string)
         itens.remove(produto)
+        todos_produtos = ''
+        for item in itens:
+            todos_produtos = todos_produtos+item.__str__()
+        caminho_arquivo = 'estoque.csv'
+        with open(caminho_arquivo, 'w') as file:
+            file.write(todos_produtos)
         return True
 
     def remove_quantidade(self,nome,qt,itens):
@@ -54,15 +48,12 @@ class Arquivo:
                 if nova_quantidade > 0:
                 #Se quantidade for 0 ou menos, posso remover da lista
                     elemento.set_qt(nova_quantidade)
-                    produto_string = ''
+                    todos_produtos = ''
                     for item in itens:
-                        #Concatenação de todos os itens
-                        produto_string = (produto_string+str(item.get_nome())+';'+str(item.get_qt())+
-                             ';'+str(item.get_preco())+';'
-                             + str(item.get_preco_custo())+'\n')
+                        todos_produtos = todos_produtos+item.__str__()
                     caminho_arquivo = 'estoque.csv'
                     with open(caminho_arquivo, 'w') as file:
-                        file.write(produto_string)
+                        file.write(todos_produtos)
                     return True
                 else:
                     self.remove_produto(elemento,itens)
@@ -77,13 +68,13 @@ class Arquivo:
             if item.get_nome() == nome:
                 nova_quantidade = int(item.get_qt()) + int(qt)
                 item.set_qt(nova_quantidade)
-                produto_string = ''
+                todos_produtos = ''
                 for elemento in itens:
                     #Concatenação de todos os itens com a nova quantidade
-                    produto_string = produto_string+str(elemento.get_nome())+';'+str(elemento.get_qt())+';'+str(elemento.get_preco())+';'+str(elemento.get_preco_custo())+'\n'
+                    todos_produtos = todos_produtos+elemento.__str__()
                 caminho_arquivo = 'estoque.csv'
                 with open(caminho_arquivo, 'w') as file:
-                    file.write(produto_string)
+                    file.write(todos_produtos)
                 return True
         return False
 
@@ -95,12 +86,12 @@ class Arquivo:
                     item.set_preco(preco)
                 else:  ## op = 0 preço de custo
                     item.set_preco_custo(preco)
-                produto_string = ''
+                todos_produtos = ''
                 for elemento in itens:
                     #Concatenação de todos os itens com o novo preço
-                    produto_string = produto_string+str(elemento.get_nome())+';'+str(elemento.get_qt())+';'+str(elemento.get_preco())+';'+str(elemento.get_preco_custo())+'\n'
+                    todos_produtos = todos_produtos+elemento.__str__()
                 caminho_arquivo = 'estoque.csv'
                 with open(caminho_arquivo, 'w') as file:
-                    file.write(produto_string)
+                    file.write(todos_produtos)
                 return True
         return False
