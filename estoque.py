@@ -38,7 +38,6 @@ class Estoque:
           file.write(todos_produtos)
       return True
 
-
   def retira_quantidade(self,nome,qt,itens_na_memoria):
       """Retira uma quantidade x de um produto"""
       for item in itens_na_memoria:
@@ -54,7 +53,8 @@ class Estoque:
                       file.write(todos_produtos)
                   return True
               else:
-                  return self.remove_produto(elemento,itens_na_memoria)
+                  self.retira_produto(item,itens_na_memoria)
+                  return True
       return False
 
   def aumenta_quantidade(self,nome,qt,itens_na_memoria):
@@ -72,7 +72,7 @@ class Estoque:
               return True
       return False
 
-  def altera_preco(self,nome,op,itens_na_memoria):
+  def altera_preco(self,nome,preco,op,itens_na_memoria):
       """Metodo para alterar preço de um produto no estoque"""
       for item in itens_na_memoria:
           if item.get_nome() == nome:
@@ -87,4 +87,4 @@ class Estoque:
               with open(caminho_arquivo, 'w') as file:
                   file.write(todos_produtos)
               return True
-      return False          
+      return False
