@@ -1,6 +1,6 @@
 from tkinter import *
 from produto import Produto
-from arquivo import Arquivo
+from estoque import Estoque
 
 
 class Programa:
@@ -10,44 +10,47 @@ class Programa:
         list = self.fr.grid_slaves()
         for l in list:
             l.destroy()
+        list = self.frame1.grid_slaves()
+        for l in list:
+            l.destroy()
 
     def printar_produtos(self):
         '''Mostra todos os produtos na coluna 0.'''
         Label(self.frame1,fg="blue",text='Produtos em estoque').grid(row=0)
-        for i in range(len(self.list_itens)):
+        for i in range(0,len(self.list_itens)):
             Label(self.frame1,fg="black",text=repr(self.list_itens[i])).grid(row=1+i)
 
 
     def inserir(self):
         '''Cria um objeto e chama o metodo responsavel por salver o produto.'''
         para_inserir = Produto(self.t1.get(),self.t2.get(),self.t3.get(),self.t4.get())
-        self.arquivo.cria_produto(para_inserir,self.list_itens)
+        self.controle.insere_produto(para_inserir,self.list_itens)
         self.widget_menu_principal()
-        Label(self.fr,text="Produto inserido com sucesso", fg="blue").grid(column=1,row=5)
+        Label(self.fr,text="Produto inserido", fg="blue").grid(row=4)
 
     def aumentar(self):
-        if self.arquivo.aumenta_quantidade(self.t1.get(),self.t2.get(),self.list_itens):
+        if self.controle.aumenta_quantidade(self.t1.get(),self.t2.get(),self.list_itens):
             self.widget_menu_principal()
-            Label(self.fr,text="Adicionado ao estoque", fg="blue").grid(column=1,row=5)
+            Label(self.fr,text="Adicionado ao estoque", fg="blue").grid(row=4)
         else:
             self.widget_menu_principal()
-            Label(self.fr,text="O Produto nao foi Aumentado :(", fg="blue").grid(column=1,row=5)
+            Label(self.fr,text="O Produto nao foi Aumentado :(", fg="red").grid(row=5)
 
     def remover(self):
-        if self.arquivo.remove_quantidade(self.t1.get(),self.t2.get(),self.list_itens):
+        if self.controle.retira_quantidade(self.t1.get(),self.t2.get(),self.list_itens):
             self.widget_menu_principal()
-            Label(self.fr,text="Produto removido com sucesso", fg="blue").grid(column=1,row=5)
+            Label(self.fr,text="Produto removido", fg="blue").grid(row=5)
         else:
             self.widget_menu_principal()
-            Label(self.fr,text="O Produto nao foi Removido :(", fg="blue").grid(column=1,row=5)
+            Label(self.fr,text="O Produto nao foi Removido :(", fg="red").grid(row=5)
 
     def alterar(self):
-        if self.arquivo.altera_preco(self.t1.get(),self.t2.get(),self.t3.get(),self.list_itens):
+        if self.controle.altera_preco(self.t1.get(),self.t2.get(),self.t3.get(),self.list_itens):
             self.widget_menu_principal()
-            Label(self.fr,text="Preço alterado", fg="blue").grid(column=1,row=5)
+            Label(self.fr,text="Preço alterado", fg="blue").grid(row=5)
         else:
             self.widget_menu_principal()
-            Label(self.fr,text="Não foi possivel alterar", fg="blue").grid(column=1, row=5)
+            Label(self.fr,text="Não foi possivel alterar", fg="red").grid(row=5)
 
     def widget_alterar(self):
         '''Metodo para recolher informacoes para alterar o preco.'''
@@ -135,8 +138,8 @@ class Programa:
         self.fr.place(x=5, y=5,width=190,height=590)
         self.frame1 = PanedWindow(root,borderwidth=1,relief='solid')
         self.frame1.place(x=205, y=5,width=190,height=590)
-        self.arquivo = Arquivo()
-        self.list_itens = self.arquivo.carrega_produtos()
+        self.controle = Estoque()
+        self.list_itens = self.controle.carrega_memoria()
         self.widget_menu_principal()
 
 
